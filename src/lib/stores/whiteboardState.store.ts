@@ -1,6 +1,7 @@
 import { writable } from 'svelte/store';
 
 type Colors = 'red' | 'green' | 'blue' | 'yellow' | 'black';
+type SizeInput = "2" | "4" | "6" | "10" | "14" | "20";
 type Size = 2 | 4 | 6 | 10 | 14 | 20;
 type lineCap = 'round' | 'square'
 
@@ -11,8 +12,8 @@ export interface State {
 }
 
 const defaultState: State = {
-	color: 'red',
-	size: 2,
+	color: 'black',
+	size: 4,
   lineCap: 'round'
 };
 
@@ -22,7 +23,10 @@ export const state = (() => {
 	return {
 		subscribe,
 		setColor: (color: Colors) => update((state) => ({ ...state, color })),
-    setSize: (size: Size) => update((state) => ({ ...state, size })),
+    setSize: (sizeInput: SizeInput) => {
+			const size = parseInt(sizeInput) as Size;
+			update((state) => ({ ...state, size}))
+		},
     setLineCap: (lineCap: lineCap) => update((state) => ({ ...state, lineCap })),
 	};
 })();

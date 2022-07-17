@@ -1,7 +1,10 @@
 <script lang="ts">
 import { onMount } from "svelte";
 import Canvas from "$lib/components/Canvas.svelte";
+import ContextMenu from "$lib/components/ContextMenu.svelte";
 
 </script>
-
-<Canvas></Canvas>
+<div>
+  <ContextMenu />
+  <Canvas />
+</div>
