@@ -1,4 +1,4 @@
-import type { State } from '$lib/stores/whiteboardState';
+import type { State } from '$lib/stores/whiteboardState.store';
 
 export const draw = (ctx: CanvasRenderingContext2D, state: State, event: MouseEvent) => {
 
