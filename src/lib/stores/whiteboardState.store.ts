@@ -17,7 +17,7 @@ const defaultState: State = {
   lineCap: 'round'
 };
 
-export const state = (() => {
+export const options = (() => {
 	const { subscribe, update } = writable(defaultState);
 
 	return {
