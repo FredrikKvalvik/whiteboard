@@ -1,14 +1,15 @@
 <script lang="ts">
+	import { slide } from 'svelte/transition';
+
 	import { options } from '$lib/stores/whiteboardState.store';
 	import { history } from '$lib/stores/whiteboardHistory.store';
 	import { ctx } from '$lib/stores/canvas.store';
 
-	import { ActionIcon, NativeSelect, Container } from '@svelteuidev/core';
+	import { ActionIcon, NativeSelect } from '@svelteuidev/core';
+
 	import Icon from './Icon.svelte';
 
-	let size = $options.size;
-	let shape = $options.lineCap;
-	let color = $options.color;
+	let isOpen = false;
 
 	const changeShape = (e: any) => {
 		options.setLineCap(e.target.value);
@@ -23,27 +24,59 @@
 	const undo = () => {
 		history.undo($ctx);
 	};
+	const open = () => {
+		isOpen = !isOpen;
+	};
 </script>
 
-<Container class="absolute bg-orange-100 flex items-center gap-4 py-2">
-	<NativeSelect
-		value={shape}
-		on:change={changeShape}
-		label="Stroke shape"
-		data={['round', 'square']}
-	/>
-	<NativeSelect
-		value={size.toString()}
-		on:change={changeSize}
-		label="Stroke width"
-		data={['2', '4', '6', '10', '14', '20']}
-	/>
-	<NativeSelect
-		value={color}
-		on:change={changeColor}
-		label="Color"
-		data={['red', 'green', 'blue', 'yellow', 'black']}
-	/>
+<div class="absolute bg-orange-100 flex flex-col items-center py-2 px-2 shadow-md">
+	<div class="self-start flex gap-4">
+		<ActionIcon radius="xl" size="xl" on:click={open}>
+			<Icon icon={isOpen ? 'close' : 'menu'} />
+		</ActionIcon>
+		<ActionIcon disabled={$history.length === 0} radius="xl" size="xl" on:click={undo}>
+			<Icon icon="undo" />
+		</ActionIcon>
+	</div>
 
-	<ActionIcon radius="xl" size="xl" on:click={undo}><Icon icon="undo" /></ActionIcon>
-</Container>
+	<div
+		class="overflow-hidden"
+		class:open={isOpen}
+		class:closed={!isOpen}
+	>
+		<div>
+			<NativeSelect
+				value={$options.lineCap}
+				label="Stroke shape"
+				on:change={changeShape}
+				data={['round', 'square']}
+			/>
+		</div>
+		<div>
+			<NativeSelect
+				value={$options.size}
+				label="Stroke width"
+				on:change={changeSize}
+				data={['2', '4', '6', '10', '14', '20']}
+			/>
+		</div>
+		<div>
+			<NativeSelect
+				value={$options.color}
+				label="Color"
+				on:change={changeColor}
+				data={['red', 'green', 'blue', 'yellow', 'black']}
+			/>
+		</div>
+	</div>
+</div>
+
+<style>
+.open {
+	@apply h-full;
+}
+
+.closed {
+	@apply h-0;
+}
+</style>

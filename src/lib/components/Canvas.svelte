@@ -2,18 +2,18 @@
 	import { onMount } from 'svelte';
 	import { options } from '$lib/stores/whiteboardState.store';
 	import { history } from '$lib/stores/whiteboardHistory.store';
-	import { canvas, ctx } from '$lib/stores/canvas.store';
+	import { canvas as canvasStore, ctx } from '$lib/stores/canvas.store';
 	import { draw } from '$lib/scripts/draw.service';
 
 	let painting: boolean = false;
 
 	// set new context for canvas after dom is loaded
 	onMount(() => {
-		$ctx = $canvas.getContext('2d') as CanvasRenderingContext2D;
+		$ctx = $canvasStore.getContext('2d') as CanvasRenderingContext2D;
 		handleResize();
 	});
 
-	const handleStartPosition = (e: MouseEvent) => {
+	const handleStart = (e: MouseEvent) => {
 		painting = true;
 		draw($ctx, $options, e);
 	};
@@ -25,7 +25,10 @@
 		draw($ctx, $options, e);
 	};
 
-	const handleEndPosition = (e: MouseEvent) => {
+	const handleEnd = (e: MouseEvent) => {
+		if (!painting) {
+			return;
+		}
 		painting = false;
 		$ctx.beginPath();
 
@@ -33,20 +36,17 @@
 	};
 
 	const handleResize = () => {
-		$canvas.width = window.innerWidth;
-		$canvas.height = window.innerHeight;
-	};
-
-	const undo = () => {
-		history.undo($ctx);
+		$canvasStore.width = window.innerWidth;
+		$canvasStore.height = window.innerHeight;
 	};
 </script>
 
 <canvas
-	on:mousedown={handleStartPosition}
-	on:mouseup={handleEndPosition}
 	on:mousemove={handleDraw}
-	bind:this={$canvas}
-	class="" />
+	on:mouseleave={handleEnd}
+	on:mousedown={handleStart}
+	on:mouseup={handleEnd}
+	bind:this={$canvasStore}
+/>
 
 <svelte:window on:resize={handleResize} />
