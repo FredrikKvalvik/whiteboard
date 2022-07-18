@@ -15,14 +15,17 @@ export declare global {
 	type SizeInput = '2' | '4' | '6' | '10' | '14' | '20';
 	type Size = 2 | 4 | 6 | 10 | 14 | 20;
 	type LineCap = 'round' | 'square';
+	type DrawMode = 'pen' | 'line';
 
 	interface Options {
 		color: Colors;
 		size: Size;
 		lineCap: lineCap;
+		drawMode: DrawMode;
 	}
 
 	type DrawHistory = ImageData[];
 
 	type DrawEvent = (ctx: CanvasRenderingContext2D, options: Options, event: MouseEvent) => void;
+	type DrawFn = (ctx: CanvasRenderingContext2D, x: number, y: number) => void;
 }
