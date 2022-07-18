@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
-	import { options } from '$lib/stores/whiteboardState.store';
+	import { options } from '$lib/stores/whiteboardOptions.store';
 	import { history } from '$lib/stores/whiteboardHistory.store';
 	import { canvas as canvasStore, ctx } from '$lib/stores/canvas.store';
 	import { draw } from '$lib/scripts/draw.service';
