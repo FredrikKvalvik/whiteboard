@@ -3,7 +3,8 @@ import { writable } from 'svelte/store';
 const defaultState: Options = {
 	color: 'black',
 	size: 4,
-  lineCap: 'round'
+  lineCap: 'round',
+	drawMode: 'pen'
 };
 
 export const options = (() => {
@@ -19,5 +20,7 @@ export const options = (() => {
 		},
 
     setLineCap: (lineCap: LineCap) => update((state) => ({ ...state, lineCap })),
+
+		setDrawMode: (drawMode: DrawMode) => update((state) => ({ ...state, drawMode }))
 	};
 })();
