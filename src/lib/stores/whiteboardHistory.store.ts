@@ -1,31 +1,30 @@
 import { writable } from 'svelte/store';
-
-type History = ImageData[];
+import { ctx as context } from "$lib/stores/canvas.store"
 
 export const history = (() => {
-	const { subscribe, set, update } = writable([] as History);
+	const { subscribe, update } = writable([] as DrawHistory);
 
 	return {
 		subscribe,
 		add: (ctx: CanvasRenderingContext2D) =>
-			update((history: History) => {
+			update((history: DrawHistory) => {
 				const newEntry = ctx.getImageData(0, 0, ctx.canvas.width, ctx.canvas.height);
 
 				return [...history, newEntry];
 			}),
 		undo: (ctx: CanvasRenderingContext2D) =>
-			update((history: History) => {
+			update((history: DrawHistory) => {
         // remove the last entry
 				history.pop();
-
         // restore to the last entry if possible, otherwise clear the canvas
 				if (history.length > 0) {
-					const newCurrent = history[history.length - 1];
+					const newCurrent = history[history.length - 1] as ImageData
 					ctx.putImageData(newCurrent, 0, 0);
 				} else {
 					ctx.clearRect(0, 0, ctx.canvas.width, ctx.canvas.height);
 				}
 
+				context.set(ctx)
 				return history;
 			})
 	};
