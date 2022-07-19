@@ -3,7 +3,7 @@ const handleOptionsHelper: (arg0: CanvasRenderingContext2D, arg1: Options) => vo
 	options
 ) => {
 	if (options.color) {
-		ctx.fillStyle = options.color;
+		ctx.strokeStyle = options.color;
 	}
 	if (options.lineCap) {
 		ctx.lineCap = options.lineCap;
@@ -40,6 +40,11 @@ const drawModeLine: DrawFn = (ctx, x, y, params) => {
 	ctx.stroke();
 };
 
+const drawModeEarser: DrawFn = (ctx, x, y) => {
+  ctx.clearRect(x, y, ctx.lineWidth, ctx.lineWidth);
+  // drawModeLine(ctx, x, y);
+}
+
 export const draw: DrawEvent = (ctx, options, params, event) => {
 	const { clientX: x, clientY: y } = event;
 
@@ -52,5 +57,7 @@ export const draw: DrawEvent = (ctx, options, params, event) => {
 		case 'line':
 			drawModeLine(ctx, x, y, params);
 			break;
+    case 'eraser': 
+      drawModeEarser(ctx, x, y);
 	}
 };

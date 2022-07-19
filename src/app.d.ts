@@ -15,7 +15,7 @@ export declare global {
 	type SizeInput = '2' | '4' | '6' | '10' | '14' | '20';
 	type Size = 2 | 4 | 6 | 10 | 14 | 20;
 	type LineCap = 'round' | 'square';
-	type DrawMode = 'pen' | 'line';
+	type DrawMode = 'pen' | 'line' | 'eraser';
 
 	interface Options {
 		color: Colors;

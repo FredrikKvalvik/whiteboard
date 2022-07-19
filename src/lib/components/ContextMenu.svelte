@@ -20,6 +20,9 @@
 	const changeColor = (e: any) => {
 		options.setColor(e.target.value);
 	};
+	const changeDrawMode = (e: any) => {
+		options.setDrawMode(e.target.value);
+	};
 
 	const undo = () => {
 		history.undo($ctx);
@@ -40,6 +43,12 @@
 	</div>
 
 	<div class="overflow-hidden" class:open={isOpen} class:closed={!isOpen}>
+		<NativeSelect
+			value={$options.drawMode}
+			label="Draw mode"
+			on:change={changeDrawMode}
+			data={['pen', 'line', 'eraser']}
+		/>
 		<NativeSelect
 			value={$options.lineCap}
 			label="Stroke shape"
