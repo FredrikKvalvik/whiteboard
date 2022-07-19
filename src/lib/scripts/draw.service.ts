@@ -34,8 +34,8 @@ const drawModeLine: DrawFn = (ctx, x, y, params) => {
 	} else {
 		ctx.putImageData(params.currentImage, 0, 0);
 	}
-	ctx.moveTo(startX, startY);
 	ctx.beginPath();
+	ctx.moveTo(startX, startY);
 	ctx.lineTo(x, y);
 	ctx.stroke();
 };
