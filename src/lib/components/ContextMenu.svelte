@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { slide } from 'svelte/transition';
 
-	import { options } from '$lib/stores/whiteboardState.store';
+	import { options } from '$lib/stores/whiteboardOptions.store';
 	import { history } from '$lib/stores/whiteboardHistory.store';
 	import { ctx } from '$lib/stores/canvas.store';
 
@@ -39,44 +39,34 @@
 		</ActionIcon>
 	</div>
 
-	<div
-		class="overflow-hidden"
-		class:open={isOpen}
-		class:closed={!isOpen}
-	>
-		<div>
-			<NativeSelect
-				value={$options.lineCap}
-				label="Stroke shape"
-				on:change={changeShape}
-				data={['round', 'square']}
-			/>
-		</div>
-		<div>
-			<NativeSelect
-				value={$options.size}
-				label="Stroke width"
-				on:change={changeSize}
-				data={['2', '4', '6', '10', '14', '20']}
-			/>
-		</div>
-		<div>
-			<NativeSelect
-				value={$options.color}
-				label="Color"
-				on:change={changeColor}
-				data={['red', 'green', 'blue', 'yellow', 'black']}
-			/>
-		</div>
+	<div class="overflow-hidden" class:open={isOpen} class:closed={!isOpen}>
+		<NativeSelect
+			value={$options.lineCap}
+			label="Stroke shape"
+			on:change={changeShape}
+			data={['round', 'square']}
+		/>
+		<NativeSelect
+			value={$options.size}
+			label="Stroke width"
+			on:change={changeSize}
+			data={['2', '4', '6', '10', '14', '20']}
+		/>
+		<NativeSelect
+			value={$options.color}
+			label="Color"
+			on:change={changeColor}
+			data={['red', 'green', 'blue', 'yellow', 'black']}
+		/>
 	</div>
 </div>
 
 <style>
-.open {
-	@apply h-full;
-}
+	.open {
+		@apply h-full;
+	}
 
-.closed {
-	@apply h-0;
-}
+	.closed {
+		@apply h-0;
+	}
 </style>
