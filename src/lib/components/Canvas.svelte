@@ -1,11 +1,15 @@
 <script lang="ts">
 	import { onMount } from 'svelte';
+	
 	import { options } from '$lib/stores/whiteboardOptions.store';
 	import { history } from '$lib/stores/whiteboardHistory.store';
+	import { params } from '$lib/stores/whiteboardParams.store';
 	import { canvas as canvasStore, ctx } from '$lib/stores/canvas.store';
+
+	import { getLatestImageData } from '$lib/scripts/helpers';
 	import { draw } from '$lib/scripts/draw.service';
 
-	let painting: boolean = false;
+	let painting = false;
 
 	// set new context for canvas after dom is loaded
 	onMount(() => {
@@ -14,15 +18,18 @@
 	});
 
 	const handleStart = (e: MouseEvent) => {
+		const latestImageData = getLatestImageData($history)
+		
+		params.setStartParams(latestImageData, e)
 		painting = true;
-		draw($ctx, $options, e);
+		draw($ctx, $options, $params as Params, e);
 	};
 
 	const handleDraw = (e: MouseEvent) => {
 		if (!painting) {
 			return;
 		}
-		draw($ctx, $options, e);
+		draw($ctx, $options, $params as Params, e);
 	};
 
 	const handleEnd = (e: MouseEvent) => {
