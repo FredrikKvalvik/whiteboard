@@ -27,13 +27,11 @@ export declare global {
 	type DrawHistory = ImageData[];
 
 	type Params = {
-		startPoint: {
-			x: number,
-			y: number
-		},
-		currentImage: ImageData,
+		event: MouseEvent;
+		currentImage: ImageData | null,
+		startPoint: { x: number; y: number };
 	}
 
-	type DrawEvent = (ctx: CanvasRenderingContext2D, options: Options, event: MouseEvent) => void;
-	type DrawFn = (ctx: CanvasRenderingContext2D, x: number, y: number) => void;
+	type DrawEvent = (ctx: CanvasRenderingContext2D, options: Options, params?: Params, event: MouseEvent) => void;
+	type DrawFn = (ctx: CanvasRenderingContext2D, x: number, y: number, params?: Params) => void;
 }

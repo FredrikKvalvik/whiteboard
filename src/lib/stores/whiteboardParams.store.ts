@@ -1,12 +1,18 @@
-import { writable } from "svelte/store";
+import { writable } from 'svelte/store';
 
 export const params = (() => {
-  const {subscribe, update, set} = writable({})
+	const { subscribe, update, set } = writable(null as Params | null);
 
-  return {
-    subscribe,
-    reset: () => set({}),
-    setStartPoint: (x: number, y: number) => update((state) => ({...state, startPoint: {x, y}})),
-    setCurrentImage: (image: ImageData) => update((state) => ({...state, currentImage: image}))
-  }
-})()
+	return {
+		subscribe,
+		reset: () => set(null),
+		setStartParams: (currentImage: ImageData | null, event: MouseEvent) => {
+			const startParams: Params = {
+				startPoint: { x: event.clientX, y: event.clientY },
+				currentImage,
+				event
+			}
+			set(startParams);
+		},
+	};
+})();
