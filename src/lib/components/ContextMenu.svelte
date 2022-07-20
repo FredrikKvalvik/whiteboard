@@ -32,7 +32,7 @@
 	};
 </script>
 
-<div class="absolute bg-orange-100 flex flex-col items-center py-2 px-2 shadow-md">
+<div class="absolute z-40 bg-orange-100 flex flex-col items-center py-2 px-2 shadow-md">
 	<div class="self-start flex gap-4">
 		<ActionIcon radius="xl" size="xl" on:click={open}>
 			<Icon icon={isOpen ? 'close' : 'menu'} />
