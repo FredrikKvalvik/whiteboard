@@ -28,7 +28,10 @@ const drawModeLine: DrawFn = (ctx, x, y, params) => {
 };
 
 const drawModeEarser: DrawFn = (ctx, x, y) => {
-  ctx.clearRect(x, y, ctx.lineWidth, ctx.lineWidth);
+  const offset = ctx.lineWidth / 2;
+
+  
+  ctx.clearRect(x - offset, y - offset, ctx.lineWidth, ctx.lineWidth);
 }
 
 export const draw: DrawEvent = (ctx, options, params, event) => {

@@ -29,9 +29,14 @@ export const drawCursor = (ctx: CanvasRenderingContext2D, options: Options, even
 	handleOptionsHelper(ctx, options);
 
 	// overwrite stroke style from helper function to make sure that the cursor is always black
-	ctx.strokeStyle = 'black';
+	ctx.strokeStyle = '#888';
 
-  // 
+	if(options.drawMode === 'eraser') {
+		cursorSquare(ctx, x, y);
+		return
+	}
+
+
 	switch (options.lineCap) {
 		case 'round':
 			cursorCircle(ctx, x, y);
