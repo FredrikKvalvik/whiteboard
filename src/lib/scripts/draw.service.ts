@@ -1,17 +1,4 @@
-const handleOptionsHelper: (arg0: CanvasRenderingContext2D, arg1: Options) => void = (
-	ctx,
-	options
-) => {
-	if (options.color) {
-		ctx.strokeStyle = options.color;
-	}
-	if (options.lineCap) {
-		ctx.lineCap = options.lineCap;
-	}
-	if (options.size) {
-		ctx.lineWidth = options.size;
-	}
-};
+import { handleOptionsHelper } from "$lib/scripts/helpers";
 
 const drawModePen: DrawFn = (ctx, x, y) => {
 	ctx.lineTo(x, y);
@@ -42,7 +29,6 @@ const drawModeLine: DrawFn = (ctx, x, y, params) => {
 
 const drawModeEarser: DrawFn = (ctx, x, y) => {
   ctx.clearRect(x, y, ctx.lineWidth, ctx.lineWidth);
-  // drawModeLine(ctx, x, y);
 }
 
 export const draw: DrawEvent = (ctx, options, params, event) => {
